@@ -5,6 +5,7 @@
 -[] insert dummy data in MYSQL workbench
 -[] create repo
 -[] clone repo and build folder structure
+-[] git init and get packages (inquirer)
 -[] create a server.js page
 -[] connect MySQL database
 -[] set up constructor for mySQL queries
