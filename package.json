@@ -1,0 +1,23 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "#### Attack Plan. * ~~create SCHEMA~~ * ~~insert dummy data in MYSQL workbench~~ * ~~create repo~~ * ~~clone repo and build folder structure~~ * git init and get packages (inquirer) * create a server.js page * connect MySQL database * set up constructor for mySQL queries * set up inquirer.prompt and switch statements * write functions to get all departments, roles and employees",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cqyates/employee-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cqyates/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/cqyates/employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  }
+}
