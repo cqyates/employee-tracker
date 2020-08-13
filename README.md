@@ -15,9 +15,13 @@
 * ~~break out connection into it's own connection.js file~~
 * ~~npm install util package to wrap query in a promise~~
 * ~~npm install console.table~~
-* set up constructor for mySQL queries
-* connect constructor to mySQL connection
-* test with SELECT * FROM department
+* ~~set up constructor for mySQL queries~~
+* ~~connect constructor to mySQL connection~~
+* ~~test with SELECT * FROM department~~
 * ~~set up inquirer.prompt and switch statements~~
-* write constructor functions to get all departments, roles and employees
+* ~~write constructor functions to get all departments, roles and employees~~
 * ~~write placeholder functions to call in switch statement~~
+* add create department, create employee and create new role to inquirer prompt
+* add above to switch statements
+* add to constructor
+* write functions in server.js page
