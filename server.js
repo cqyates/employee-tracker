@@ -3,43 +3,105 @@ const DB = require('./db/DB');
 require('dotenv').config();
 const { printTable } = require('console-table-printer');
 
-function promptUser() {
+function mainMenu() {
+  inquirer.prompt([{
+    type: "list",
+    name: "mainMenu",
+    message: "What would you like to Do?",
+    choices: ["Work with Employees", "Work with Positions", "Work with Departments", "Exit"]
+
+  }]).then(function(answers){
+    switch (answers.mainMenu) {
+      case 'Work with Employees':
+        Employee_Prompts();
+        break;
+      case 'Work with Positions':
+       Role_Prompts();
+        break;
+      case 'Work with Departments':
+        Department_Prompts();
+        break;
+      default:
+        goodBye();
+    }
+  })
+}
+
+function Employee_Prompts () {
   inquirer
     .prompt([
       {
         type: 'list',
-        name: 'direction',
+        name: 'employeeMenu',
         message: 'What would you like to do?',
         choices: [
           'View All Employees',
-          'View All Departments',
-          'View All Roles',
-          'Add Department',
-          'Add Role',
           'Add Employee',
           'Exit',
         ],
       },
     ])
     .then((answer) => {
-      switch (answer.direction) {
+      switch (answer.employeeMenu) {
         case 'View All Employees':
           View_All_Employees();
           break;
-        case 'View All Departments':
-          View_All_Departments();
-          break;
-        case 'View All Roles':
-          View_All_Roles();
-          break;
-        case 'Add Department':
-          Add_Department();
-          break;
-        case 'Add Role':
-          Add_Role();
-          break;
         case 'Add Employee':
           Add_Employee();
+          break;
+        default:
+          goodBye();
+      }
+    });
+}
+function Role_Prompts () {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'rolesMenu',
+        message: 'What would you like to do?',
+        choices: [
+          'View All Positions',
+          'Add a New Position',
+          'Exit',
+        ],
+      },
+    ])
+    .then((answer) => {
+      switch (answer.rolesMenu) {
+        case 'View All Positions':
+          View_All_Roles();
+        break;
+        case 'Add a New Position':
+          Add_Role();
+          break;
+        default:
+          goodBye();
+      }
+    });
+}
+function Department_Prompts () {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'departmentMenu',
+        message: 'What would you like to do?',
+        choices: [
+          'View All Departments',
+          'Add a New Department',
+          'Exit',
+        ],
+      },
+    ])
+    .then((answer) => {
+      switch (answer.departmentMenu) {
+        case 'View All Departments':
+          View_All_Departments();
+        break;
+        case 'Add a New Department':
+          Add_Department();
           break;
         default:
           goodBye();
@@ -50,21 +112,21 @@ function View_All_Employees() {
   console.log('Here is your full roster of employees');
   DB.findAllEmployees().then(function (response) {
     printTable(response);
-    promptUser();
+    mainMenu();
   });
 }
 const View_All_Departments = () => {
   console.log('Here are the active departments:');
   DB.findAllDepartments().then(function (res) {
     printTable(res);
-    promptUser();
+  mainMenu();
   });
 };
 const View_All_Roles = () => {
   console.log('Here are the current roles for your organization');
   DB.findAllRoles().then((data) => {
     printTable(data);
-    promptUser();
+    mainMenu();
   });
 };
 const Add_Department = () => {
@@ -83,8 +145,13 @@ const Add_Department = () => {
       });
     });
 };
-const Add_Role = () => {
-  console.log('add role here');
+async function Add_Role() {
+  const departments = await DB.findAllDepartments();
+
+  const departmentChoices = departments.map(({ id, name }) => ({
+    name: name,
+    value: id
+  }));
   inquirer
     .prompt([
       {
@@ -108,8 +175,7 @@ const Add_Role = () => {
         type: 'list',
         name: 'departmentID',
         message: 'Which department is assigned this position',
-        choices: ['1', '2', '3', '4'],
-        // create a for loop over the different departments
+        choices: departmentChoices
       },
     ])
     .then((answers) => {
@@ -121,7 +187,15 @@ const Add_Role = () => {
       );
     });
 };
-const Add_Employee = () => {
+async function Add_Employee() {
+
+  const roles = await DB.findAllRoles();
+  //makes the array of roles grow as we add new roles
+  const roleChoices = roles.map(({ id, title }) => ({
+    name: title,
+    value: id
+  }));
+
   inquirer
     .prompt([
       {
@@ -150,7 +224,7 @@ const Add_Employee = () => {
         type: 'list',
         name: 'roleID',
         message: "what is this employee's position?",
-        choices: ['1', '2', '3', '4']
+        choices: roleChoices
       }
     ])
     .then(function(answers) {
@@ -166,5 +240,6 @@ const Add_Employee = () => {
 };
 function goodBye() {
   console.log('Thanks for using the Employee Tracker, We keep track!');
+  process.exit()
 }
-promptUser();
+mainMenu();
