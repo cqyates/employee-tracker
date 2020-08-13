@@ -26,6 +26,8 @@
 * ~~add to constructor~~
 * ~~write functions in server.js page~~
 * ~~write additional prompts for the information we need to add to database~~
+* ~~add validation to input fields
+* create for loops that pull up departments by name
 * ~~test creation of departments, roles and employees~~
 
 * alter flow so intial questions asks if you would like to view, create, update or delate and then we group the functions
