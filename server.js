@@ -37,6 +37,7 @@ function Employee_Prompts () {
         choices: [
           'View All Employees',
           'Add Employee',
+          'List Employees by Department',
           'Exit',
         ],
       },
@@ -48,6 +49,9 @@ function Employee_Prompts () {
           break;
         case 'Add Employee':
           Add_Employee();
+          break;
+        case 'List Employees by Department':
+          List_Employees_By_Department();
           break;
         default:
           goodBye();
@@ -129,6 +133,27 @@ const View_All_Roles = () => {
     mainMenu();
   });
 };
+
+async function List_Employees_By_Department() {
+  const departments = await DB.findAllDepartments();
+  const departmentArray = departments.map(({ id, name }) => ({
+    name: name,
+    value: id
+  }));
+  inquirer.prompt([{
+    type: "list",
+    name: "departmentChoice",
+    message: "Which department would you like to see?",
+    choices: departmentArray
+  }]).then(function(response) {
+    console.log(response.departmentChoice)
+    DB.listEmployeesByDepartment().then(function(response){
+      printTable(response)
+      //currently getting all employees.  Need to use Where?
+      //pausing this one, to do roles by Department.
+    })
+  })
+}
 const Add_Department = () => {
   inquirer
     .prompt([
@@ -147,7 +172,7 @@ const Add_Department = () => {
 };
 async function Add_Role() {
   const departments = await DB.findAllDepartments();
-
+  
   const departmentChoices = departments.map(({ id, name }) => ({
     name: name,
     value: id

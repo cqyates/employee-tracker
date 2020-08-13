@@ -33,6 +33,9 @@ class DB {
       role_id: role_id
     })
   }
+  listEmployeesByDepartment() {
+    return this.connection.query("SELECT employee.first_name, employee.last_name, employee.role_id FROM employee")
+  }
 }
 
 module.exports = new DB(connection);
