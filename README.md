@@ -26,8 +26,16 @@
 * ~~add to constructor~~
 * ~~write functions in server.js page~~
 * ~~write additional prompts for the information we need to add to database~~
-* ~~add validation to input fields
-* create for loops that pull up departments by name
+* ~~add validation to input fields~~
+* ~~create for loops that pull up departments by name~~
 * ~~test creation of departments, roles and employees~~
 
-* alter flow so intial questions asks if you would like to view, create, update or delate and then we group the functions
+* ~~alter flow so intial questions asks if you would like to work with employees, positions or departments~~
+
+** for each new option follow these steps. (ie Find_Roles_By_Department)
+  - add the selection to the array for the question, "what would you like to do?"
+  - add to switch statement
+  - write function that console.logs the job of the function as a string
+  - go to constuctor and create method to interact with mySQL database
+  - call the method in the function either printTable or call the View_All function for that table type.
+  - test 
